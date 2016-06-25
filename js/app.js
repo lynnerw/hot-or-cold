@@ -24,31 +24,43 @@ $(document).ready(function(){
 			var secretNum = getRandomNum(1, 100);
 				console.log('User selected new game and secret num is ' + secretNum);
 			return secretNum;
+			count = 0;
 		});
 
 		// user input: each time the user guesses, test the guess against the random number and increase the count
 		var count = 0;
 		$('input[type="submit"]').click(function() {
+			  $('h2#feedback').empty();
 				var textInput = $('input[name="userGuess"]');
 				var userNum = textInput.val();
 					// console.log('userNum is ' + userNum);
 
-				if (count <= 3) {
+				if (count <= 5) {
 
 								// check whether the user guessed the secret number value
 							console.log('User picked ' + userNum + '; the secret number is ' + secretNum);
-
-				  		if (userNum > secretNum) {
-									// console.log('userNum is greater than secretNum');
-									$('ul#guessList').append('<li>' + 'Hmmm. Your guess was a little too high.' + '</li>');
-								}
-								else {
-									// console.log('userNum is less than than secretNum');
-									$('ul#guessList').append('Hmmm. Your guess was a little too low.');
-								}
-							count++;
-							// console.log('count is ' + count);
+						if (userNum == secretNum) {
+							$('h2#feedback').append('You are correct! The secret number was ' + secretNum + '. Nice job.');
+							count = 0;
+							$('ul#guessList').empty();
 							$('#count').html(count);
+						}
+							else  {
+				  			if (userNum > secretNum) {
+									// console.log('userNum is greater than secretNum');
+									$('h2#feedback').append('Ooops. Your guess was a little too high.');
+									}
+									else {
+										// console.log('userNum is less than than secretNum');
+										$('h2#feedback').append('Hmmm. Your guess was a little too low.');
+									}
+								  //display number they guessed
+									$('ul#guessList').prepend('You just guessed ' + userNum + '<br>');
+									// increment the count
+									count++;
+									// display the new count; console.log('count is ' + count);
+									$('#count').html(count);
+								}
 				}
 				else {
 					$('#question').append('<br>' + ' Don\'t you have something better to do?');
