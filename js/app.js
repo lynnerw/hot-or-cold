@@ -21,6 +21,8 @@ $(document).ready(function(){
 
 		// on new game request generate random secret number
 		$('.new').click(function() {
+			$('h2#feedback').empty();
+			$('h2#feedback').append('What\'s your guess?');
 			var secretNum = getRandomNum(1, 100);
 				console.log('User selected new game and secret num is ' + secretNum);
 			return secretNum;
@@ -30,12 +32,21 @@ $(document).ready(function(){
 		// user input: each time the user guesses, test the guess against the random number and increase the count
 		var count = 0;
 		$('input[type="submit"]').click(function() {
+
 			  $('h2#feedback').empty();
 				var textInput = $('input[name="userGuess"]');
 				var userNum = textInput.val();
 					// console.log('userNum is ' + userNum);
+				if (isNaN(parseInt(userNum))) {
+						$('h2#feedback').append('Oops. Your guess has to be a whole number greater than 0 and less 101.');
+					}
+				else {
+					if (userNum > 100) {
+						$('h2#feedback').append('Oops. Your guess has to be greater than 0 and less 101.');
+					}
+					else {
 
-				if (count <= 5) {
+						if (count <= 5) {
 
 								// check whether the user guessed the secret number value
 							console.log('User picked ' + userNum + '; the secret number is ' + secretNum);
@@ -65,10 +76,10 @@ $(document).ready(function(){
 				else {
 					$('#question').append('<br>' + ' Don\'t you have something better to do?');
 				}
-
+			}
 			// clear the input
 			textInput.val('');
-
+		}
 		});
 
 // check that user input is an integer less than 100
