@@ -19,6 +19,13 @@ $(document).ready(function(){
 			return secretNum;
 		};
 
+		// on new game request generate random secret number
+		$('.new').click(function() {
+			var secretNum = getRandomNum(1, 100);
+				console.log('User selected new game and secret num is ' + secretNum);
+			return secretNum;
+		});
+
 		// user input: each time the user guesses, test the guess against the random number and increase the count
 		var count = 0;
 		$('input[type="submit"]').click(function() {
@@ -26,17 +33,18 @@ $(document).ready(function(){
 				var userNum = textInput.val();
 					// console.log('userNum is ' + userNum);
 
-				if (count <= 5) {
-							var secretNum = getRandomNum(1, 100);
-								// console.log('The secret number outside the function is ' + secretNum);
+				if (count <= 3) {
+
 								// check whether the user guessed the secret number value
 							console.log('User picked ' + userNum + '; the secret number is ' + secretNum);
-							$('#guessList ul').html('You picked ' + userNum + '.' + '<br>');
+
 				  		if (userNum > secretNum) {
-									$('#guessList ul').html('Hmmm. Your guess was a little too high.');
+									// console.log('userNum is greater than secretNum');
+									$('ul#guessList').append('<li>' + 'Hmmm. Your guess was a little too high.' + '</li>');
 								}
 								else {
-									$('#guessList ul').html('Hmmm. Your guess was a little too low.');
+									// console.log('userNum is less than than secretNum');
+									$('ul#guessList').append('Hmmm. Your guess was a little too low.');
 								}
 							count++;
 							// console.log('count is ' + count);
