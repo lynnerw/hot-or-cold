@@ -32,85 +32,71 @@ $(document).ready(function(){
 						//return newGame;
 		};
 
+		$('input[type="submit"]').click(function() {
+				$('h2#feedback').empty();
+				//clear the don't you have something better to do question
+				$('#question').empty();
 
-		//var newGame = true;
+				var textInput = $('input[name="userGuess"]');
+				var userNum = textInput.val();
+
+				// console.log('User picked ' + userNum + '; the secret number is ' + secretNum);
+
+				if((isNaN(parseInt(userNum))) || (parseInt(userNum > 100))) {
+
+						$('h2#feedback').append('Oops. Your guess has to be a number greater than 0 and less 100.');
+
+					// check whether the user guessed the secret number value
+				} else if(userNum == secretNum) {
+										$('h2#feedback').append('You are correct! The secret number was ' + secretNum + '.<br> Ready for another game?');
+										count = 0;
+										$('ul#guessList').empty();
+										$('#count').html(count);
+
+					// check whether user guess was above secret num and if high by less than, equal to, or greater than 10
+				}	else {
+						if((userNum > secretNum) && ((userNum - secretNum) <= 10)) {
+												$('h2#feedback').append('Ooops. Your guess was a little high but you\'re pretty warm.');
+						} else if((userNum > secretNum) && ((userNum - secretNum) > 10)) {
+													$('h2#feedback').append('Ooops. Your guess was too high.');
+
+						 // check whether user guess was below secret num and if low by less than, equal to, or greater than 10
+						}	else if((userNum < secretNum) && ((secretNum - userNum) <= 10)) {
+													$('h2#feedback').append('Ooops. Your guess was a little low but you\'re pretty warm.');
+						} else if((userNum < secretNum) && ((secretNum - userNum) > 10)){
+													$('h2#feedback').append('Ooops. Your guess was too low.');
+						}
+
+						// display number they guessed
+						$('ul#guessList').prepend('You just guessed ' + userNum + '<br>');
+						// increment the count
+						count++;
+						// display the new count console.log('count is ' + count);
+						$('#count').html(count);
+						if (count == 5) {
+								$('#question').append('<br>' + ' Don\'t you have something better to do?');
+						}
+						// end checking valid user guess
+						};
+
+				// clear the input
+				textInput.val('');
+
+		// end check user input
+		});
 
 		function newGame() {
-
 				clearOldGame();
-
 				// on page load or new game select, generate random number
 				var secretNum = getRandomNum(1, 100);
-				// console.log('Page loaded or user selected new game and secret num is ' + secretNum);
-
 				// insert prompt
 				$('h2#feedback').append('I picked a number between 1 and 100. What do you think it is?');
-
 				// the game has started
 				count = 0;
-
-				// get and check user input: each time the user guesses, test the guess against the random number and increase the count
-				$('input[type="submit"]').click(function() {
-						$('h2#feedback').empty();
-						//clear the don't you have something better to do question
-						$('#question').empty();
-
-						var textInput = $('input[name="userGuess"]');
-						var userNum = textInput.val();
-
-						// console.log('User picked ' + userNum + '; the secret number is ' + secretNum);
-
-						if((isNaN(parseInt(userNum))) || (parseInt(userNum > 100))) {
-
-								$('h2#feedback').append('Oops. Your guess has to be a number greater than 0 and less 100.');
-
-							// check whether the user guessed the secret number value
-						} else if(userNum == secretNum) {
-												$('h2#feedback').append('You are correct! The secret number was ' + secretNum + '.<br> Ready for another game?');
-												count = 0;
-												$('ul#guessList').empty();
-												$('#count').html(count);
-
-							// check whether user guess was above secret num and if high by less than, equal to, or greater than 10
-						}	else {
-								if((userNum > secretNum) && ((userNum - secretNum) <= 10)) {
-														$('h2#feedback').append('Ooops. Your guess was a little high but you\'re pretty warm.');
-								} else if((userNum > secretNum) && ((userNum - secretNum) > 10)) {
-															$('h2#feedback').append('Ooops. Your guess was too high.');
-
-								 // check whether user guess was below secret num and if low by less than, equal to, or greater than 10
-								}	else if((userNum < secretNum) && ((secretNum - userNum) <= 10)) {
-															$('h2#feedback').append('Ooops. Your guess was a little low but you\'re pretty warm.');
-								} else if((userNum < secretNum) && ((secretNum - userNum) > 10)){
-															$('h2#feedback').append('Ooops. Your guess was too low.');
-								}
-
-								// display number they guessed
-								$('ul#guessList').prepend('You just guessed ' + userNum + '<br>');
-								// increment the count
-								count++;
-								// display the new count console.log('count is ' + count);
-								$('#count').html(count);
-								if (count == 5) {
-										$('#question').append('<br>' + ' Don\'t you have something better to do?');
-								}
-								// end checking valid user guess
-								};
-
-						// clear the input
-						textInput.val('');
-
-				// end check user input
-				});
-
-			// end definition of function newGame
-			};
-
-			newGame();
-
+		};
+		newGame();
 			// if user select new game
-			$('.new').click(function() {
-				newGame();
-			});
-
+		$('.new').click(function() {
+			newGame();
+		});
 });
