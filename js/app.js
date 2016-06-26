@@ -71,29 +71,31 @@ $(document).ready(function(){
 												$('ul#guessList').empty();
 												$('#count').html(count);
 
-								// check whether user guess was above or below the secret number value
-								} else if((userNum > secretNum) && ((userNum - secretNum) <= 10)) {
-												$('h2#feedback').append('Ooops. Your guess was a little high but you\'re pretty warm.');
-											} else if((userNum > secretNum) && ((userNum - secretNum) > 10)) {
-													$('h2#feedback').append('Ooops. Your guess was a too high.');
-												}
-									} else if((userNum < secretNum) && ((secretNum - userNum) <= 10)) {
-													$('h2#feedback').append('Ooops. Your guess was a little low but you\'re pretty warm.');
-											} else if((userNum < secretNum) && ((secretNum - userNum) > 10)){
-													$('h2#feedback').append('Ooops. Your guess was a too low.');
-													}
+							// check whether user guess was above secret num and if high by less than, equal to, or greater than 10
+						}	else {
+								if((userNum > secretNum) && ((userNum - secretNum) <= 10)) {
+														$('h2#feedback').append('Ooops. Your guess was a little high but you\'re pretty warm.');
+								} else if((userNum > secretNum) && ((userNum - secretNum) > 10)) {
+															$('h2#feedback').append('Ooops. Your guess was too high.');
 
-										// display number they guessed
-										$('ul#guessList').prepend('You just guessed ' + userNum + '<br>');
-										// increment the count
-										count++;
-										// display the new count
-										console.log('count is ' + count);
-										$('#count').html(count);
-										if (count == 5) {
-												$('#question').append('<br>' + ' Don\'t you have something better to do?');
-										}
-										}
+								 // check whether user guess was below secret num and if low by less than, equal to, or greater than 10
+								}	else if((userNum < secretNum) && ((secretNum - userNum) <= 10)) {
+															$('h2#feedback').append('Ooops. Your guess was a little low but you\'re pretty warm.');
+								} else if((userNum < secretNum) && ((secretNum - userNum) > 10)){
+															$('h2#feedback').append('Ooops. Your guess was too low.');
+								}
+
+								// display number they guessed
+								$('ul#guessList').prepend('You just guessed ' + userNum + '<br>');
+								// increment the count
+								count++;
+								// display the new count console.log('count is ' + count);
+								$('#count').html(count);
+								if (count == 5) {
+										$('#question').append('<br>' + ' Don\'t you have something better to do?');
+								}
+								// end checking valid user guess
+								};
 
 						// clear the input
 						textInput.val('');
